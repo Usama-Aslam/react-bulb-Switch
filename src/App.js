@@ -8,17 +8,29 @@ class App extends Component {
   constructor(){
     super();
     this.state={
-      show:true
+      show:true,
+      breakState:false,
+      bulbState:true
       // showImage:true
     }
     // this.hideImage=this.hideImage.bind(this)
     // this.hideImage=this.hideImage.bind(this)
     this.toggle=this.toggle.bind(this);
+    this.breakBulb=this.breakBulb.bind(this);
   }
 
   toggle(too){
     this.setState({
-      show:too
+      show:too,
+      bulbState:true,
+      breakState:false
+    })
+  }
+
+  breakBulb(){
+    this.setState({
+      bulbState:false,
+      breakState:true
     })
   }
   // hideImage(){
@@ -34,13 +46,16 @@ class App extends Component {
   // }
 
   render() {
-    const  {show}=this.state;
+    const  {show, breakState, bulbState}=this.state;
     return (
     <div>
       <Button text="switch On" onPress={()=>{this.toggle(true)}}/>
-      <Button text="swithc Off"onPress={()=>{this.toggle(false)}}/>
+      <Button text="switch Off"onPress={()=>{this.toggle(false)}}/>
+      <Button text="Break"onPress={this.breakBulb}/>
 
-      {show && <img src={require('./Assets/images/image.png')} width="150" height="150"/>}
+      {!show && bulbState && <img src={require('./Assets/images/bulb-off.jpg')} width="300" height="400"/>}
+      {show  && bulbState &&<img src={require('./Assets/images/bulb-on.jpg')} width="300" height="400"/>}
+      {breakState && <img src={require('./Assets/images/bulb-break.jpg')} width="300" height="400"/>}
     </div>
     );
   }
